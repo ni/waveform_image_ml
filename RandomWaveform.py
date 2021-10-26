@@ -81,10 +81,12 @@ yAxisLabels = ['S_PA_Out_PA_In_Phase (deg)',
 'Idc_Vcc (uA)',
 'Vth2 (V)']
 
+IMAGE_DIRECTORY = 'images'
+
 def save_plot( xTitle, yTitle):
     title = f'{get_random_element_from_array(titleHeaders)} {yTitle}'
     current_time = datetime.now().strftime("%y%m%d%H%M%S")
-    filename = f'visualizations/Waveforms/images/{title}{str(current_time)}.png'
+    filename = f'{IMAGE_DIRECTORY}/{title}{str(current_time)}.png'
     plt.title(title)
     plt.xlabel(xTitle)
     plt.ylabel(yTitle)
@@ -93,6 +95,7 @@ def save_plot( xTitle, yTitle):
     return filename
 
 def save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes):
+    os.makedirs(IMAGE_DIRECTORY,exist_ok=True)
     xTitle = get_random_element_from_array(xAxisLabels)
     yTitle = get_random_element_from_array(yAxisLabels)
     if genFamiliesOnSinglePlot:
@@ -100,7 +103,7 @@ def save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes):
             plt.plot(x, y, color=random_color())
         save_plot(xTitle, yTitle)
     else:
-        with open(f'visualizations/Waveforms/images/lables.csv', 'a', newline='') as csvfile:
+        with open(f'{IMAGE_DIRECTORY}/lables.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=',')
             for n in range(len(waveforms)):
                 ylim = get_max_y_axis_plot_scale(x, waveforms)
@@ -210,7 +213,7 @@ def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, genFamiliesOnSi
         save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes)
 
 def main():
-    gen_uniform_based_waveforms(100, 25, genFamiliesOnSinglePlot=False)
+    gen_uniform_based_waveforms(10, 5, genFamiliesOnSinglePlot=False)
 
 if __name__ == "__main__":
     main()
