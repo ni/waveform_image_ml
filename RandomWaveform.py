@@ -1,12 +1,12 @@
-import numpy as np
-import math
-import matplotlib.pyplot as plt
-from numpy.core.function_base import linspace
-import numpy.random as rnd
-from tqdm import tqdm
 import csv
+import math
 import os
 from datetime import datetime
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy.random as rnd
+from numpy.core.function_base import linspace
+from tqdm import tqdm
 
 titleHeaders = ['Simulate', 'Validate', 'ATE']
 xAxisLabels = ['Frequency', 'Voltage', 'Time', 'Decibels (dB)', 'Degrees']
