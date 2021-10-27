@@ -26,6 +26,6 @@ Create a AI/ML approach to classifying images of waveform data
 3. Highlight image regions that are possibly errors.
 
 # Getting Started
-After cloning the repo, do the following.
+After cloning the repo, do the following:
 1. run `pip install -r requirements.txt` to install required python packages
 2. run `python RandomWaveform.py` to generate a set of waveform images
