@@ -1,4 +1,4 @@
-import csv
+import csv 
 import math
 import os
 from datetime import datetime
@@ -7,14 +7,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.random as rnd
 from numpy.core.function_base import linspace
+import semivariables as sv
 from tqdm import tqdm
 
-from semivariables import semivariables
-
 IMAGE_DIRECTORY = 'images'
+LABEL_FILE = 'labels.csv'
 
-def save_plot( xTitle, yTitle):
-    title = f'{semivariables.get_random_discipline()} {yTitle}'
+def save_labels_to_csv(savefolder, labels):
+    with open(os.path.join(savefolder, LABEL_FILE), 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(labels)
+
+def save_plot(xTitle, yTitle, classification):
+    title = f'{sv.get_random_discipline()} {yTitle}'
     current_time = datetime.now().strftime("%y%m%d%H%M%S")
     filename = f'{IMAGE_DIRECTORY}/{title}{str(current_time)}.png'
     plt.title(title)
@@ -22,28 +27,26 @@ def save_plot( xTitle, yTitle):
     plt.ylabel(yTitle)
     plt.savefig(filename)
     plt.cla()
+    save_labels_to_csv(IMAGE_DIRECTORY, [filename, classification])
     return filename
 
 def save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes):
     os.makedirs(IMAGE_DIRECTORY,exist_ok=True)
-    xTitle = semivariables.get_random_xaxis()
-    yTitle = semivariables.get_random_yaxis()
+    xTitle = sv.get_random_xaxis()
+    yTitle = sv.get_random_yaxis()
     if genFamiliesOnSinglePlot:
         for y in waveforms:
             plt.plot(x, y, color=random_color())
         save_plot(xTitle, yTitle)
     else:
-        with open(f'{IMAGE_DIRECTORY}/lables.csv', 'a', newline='') as csvfile:
-            writer = csv.writer(csvfile, delimiter=',')
-            for n in range(len(waveforms)):
-                ylim = get_max_y_axis_plot_scale(x, waveforms)
-                plt.plot(x, waveforms[n], color=random_color())
-                plt.gca().set_ylim(ylim)
-                filename = save_plot(xTitle, yTitle)
-                label = 'good'
-                if n in errorIndexes:
-                    label='bad'
-                writer.writerow([os.path.basename(filename), label])
+        for n in range(len(waveforms)):
+            ylim = get_max_y_axis_plot_scale(x, waveforms)
+            plt.plot(x, waveforms[n], color=random_color())
+            plt.gca().set_ylim(ylim)
+            label = 'good'
+            if n in errorIndexes:
+                label='bad'
+            save_plot(xTitle, yTitle, label)
 
 def get_max_y_axis_plot_scale(x, waveforms):
     for w in waveforms:
