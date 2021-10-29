@@ -19,6 +19,7 @@ def save_labels_to_csv(savefolder, labels):
         writer.writerow(labels)
 
 def save_plot(xTitle, yTitle, classification):
+    plt.figure(figsize=(7,5), dpi=200)
     title = f'{sv.get_random_discipline()} {yTitle}'
     current_time = datetime.now().strftime("%y%m%d%H%M%S")
     filename = f'{IMAGE_DIRECTORY}/{title}{str(current_time)}.png'
@@ -118,28 +119,31 @@ def introduce_error(y):
         return inroduce_constant_error(y)
     return y
 
+def gen_uniform_based_waveform_family(waveformsPerFamily):
+    factorOfWaveformsWithError = 0.3
+    numberWithErrors = math.floor(waveformsPerFamily * factorOfWaveformsWithError * rnd.random())
+    errorIndexes = rnd.randint(0, waveformsPerFamily-1,numberWithErrors)
+    segments = rnd.randint(4,8)
+    xBounds = rnd.rand(2)
+    xMin,xMax = np.min(xBounds), np.max(xBounds)
+    xPointCount = 1000
+    x = np.linspace(xMin, xMax, num=xPointCount)
+    y = gen_random_uniform_based_waveform(x, segments)
+    waveforms = []
+    for n in tqdm(range(waveformsPerFamily), desc=f'Generating Waveforms for family {f}'):
+        lineBounds = rnd.random(2)
+        line = np.linspace(lineBounds.min(), lineBounds.max(), num=xPointCount)
+        ys = y * line
+        if n in errorIndexes:
+            ys = introduce_error(ys)
+        waveforms.append(ys)
+    waveforms = add_noise(waveforms)
+    return x, waveforms, errorIndexes
+
 def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, genFamiliesOnSinglePlot):
     print(f'Total: {numFamilies*waveformsPerFamily}. Creating {numFamilies} waveform families with {waveformsPerFamily} waveforms per family.')
-    plt.figure(figsize=(7,5), dpi=200)
     for f in range(numFamilies):
-        factorOfWaveformsWithError = 0.3
-        numberWithErrors = math.floor(waveformsPerFamily * factorOfWaveformsWithError * rnd.random())
-        errorIndexes = rnd.randint(0, waveformsPerFamily-1,numberWithErrors)
-        segments = rnd.randint(4,8)
-        xBounds = rnd.rand(2)
-        xMin,xMax = np.min(xBounds), np.max(xBounds)
-        xPointCount = 1000
-        x = np.linspace(xMin, xMax, num=xPointCount)
-        y = gen_random_uniform_based_waveform(x, segments)
-        waveforms = []
-        for n in tqdm(range(waveformsPerFamily), desc=f'Generating Waveforms for family {f}'):
-            lineBounds = rnd.random(2)
-            line = np.linspace(lineBounds.min(), lineBounds.max(), num=xPointCount)
-            ys = y * line
-            if n in errorIndexes:
-                ys = introduce_error(ys)
-            waveforms.append(ys)
-        waveforms = add_noise(waveforms)
+        x, waveforms, errorIndexes = gen_uniform_based_waveform_family(waveformsPerFamily)
         save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes)
 
 def main():
