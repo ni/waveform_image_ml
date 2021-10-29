@@ -119,7 +119,7 @@ def introduce_error(y):
         return inroduce_constant_error(y)
     return y
 
-def gen_uniform_based_waveform_family(waveformsPerFamily):
+def gen_uniform_based_waveform_family(waveformsPerFamily, familyNumber):
     factorOfWaveformsWithError = 0.3
     numberWithErrors = math.floor(waveformsPerFamily * factorOfWaveformsWithError * rnd.random())
     errorIndexes = rnd.randint(0, waveformsPerFamily-1,numberWithErrors)
@@ -130,7 +130,7 @@ def gen_uniform_based_waveform_family(waveformsPerFamily):
     x = np.linspace(xMin, xMax, num=xPointCount)
     y = gen_random_uniform_based_waveform(x, segments)
     waveforms = []
-    for n in tqdm(range(waveformsPerFamily), desc=f'Generating Waveforms for family {f}'):
+    for n in tqdm(range(waveformsPerFamily), desc=f'Generating Waveforms for family {familyNumber}'):
         lineBounds = rnd.random(2)
         line = np.linspace(lineBounds.min(), lineBounds.max(), num=xPointCount)
         ys = y * line
@@ -143,7 +143,7 @@ def gen_uniform_based_waveform_family(waveformsPerFamily):
 def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, genFamiliesOnSinglePlot):
     print(f'Total: {numFamilies*waveformsPerFamily}. Creating {numFamilies} waveform families with {waveformsPerFamily} waveforms per family.')
     for f in range(numFamilies):
-        x, waveforms, errorIndexes = gen_uniform_based_waveform_family(waveformsPerFamily)
+        x, waveforms, errorIndexes = gen_uniform_based_waveform_family(waveformsPerFamily, f)
         save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes)
 
 def main():
