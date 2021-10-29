@@ -1,4 +1,3 @@
-from matplotlib.pyplot import xlabel
 import numpy.random as rnd
 
 class semivariables:
