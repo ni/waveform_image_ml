@@ -9,9 +9,8 @@ import semivariables as sv
 
 
 def save_plot(xTitle, yTitle, classification, directory):
-    plt.figure(figsize=(7, 5), dpi=200)
     title = f'{sv.get_random_discipline()} {yTitle}'
-    current_time = datetime.now().strftime("%y%m%d%H%M%S")
+    current_time = datetime.now().strftime("%y%m%d%H%M%S%f")
     filename = f'{directory}/{title}{str(current_time)}.png'
     plt.title(title)
     plt.xlabel(xTitle)
@@ -26,6 +25,7 @@ def save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes, directory):
     os.makedirs(directory, exist_ok=True)
     xTitle = sv.get_random_xaxis()
     yTitle = sv.get_random_yaxis()
+    plt.figure(figsize=(7, 5), dpi=200)
     if genFamiliesOnSinglePlot:
         for y in waveforms:
             plt.plot(x, y, color=random_color())
@@ -38,7 +38,7 @@ def save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes, directory):
             label = 'good'
             if n in errorIndexes:
                 label = 'bad'
-            save_plot(xTitle, yTitle, label)
+            save_plot(xTitle, yTitle, label, directory)
 
 
 def get_max_y_axis_plot_scale(x, waveforms):
