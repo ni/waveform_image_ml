@@ -1,4 +1,3 @@
-import csv
 import os
 from datetime import datetime
 
@@ -7,14 +6,9 @@ import numpy.random as rnd
 
 import semivariables as sv
 import UniformWaveform
+import Labels
 
 IMAGE_DIRECTORY = 'images'
-LABEL_FILE = 'labels.csv'
-
-def save_labels_to_csv(savefolder, labels):
-    with open(os.path.join(savefolder, LABEL_FILE), 'a', newline='') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',')
-        writer.writerow(labels)
 
 def save_plot(xTitle, yTitle, classification):
     plt.figure(figsize=(7,5), dpi=200)
@@ -26,7 +20,7 @@ def save_plot(xTitle, yTitle, classification):
     plt.ylabel(yTitle)
     plt.savefig(filename)
     plt.cla()
-    save_labels_to_csv(IMAGE_DIRECTORY, [filename, classification])
+    Labels.save_labels_to_csv(IMAGE_DIRECTORY, [filename, classification])
     return filename
 
 def save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes):
