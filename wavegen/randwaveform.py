@@ -1,5 +1,5 @@
-import MatplotlibFormat as mplf
-import UniformWaveform
+import mplformat as mplf
+import uniformwaveform
 
 IMAGE_DIRECTORY = "images"
 
@@ -11,9 +11,9 @@ def gen_random_square_wave():
 
 def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, genFamiliesOnSinglePlot):
     print(f"Total: {numFamilies * waveformsPerFamily}. Creating {numFamilies} waveform families with {waveformsPerFamily} waveforms per family.")
-    generator = UniformWaveform.generator()
+    uniform_gen = uniformwaveform.Generator()
     for f in range(numFamilies):
-        x, waveforms, errorIndexes = generator.gen_uniform_based_waveform_family(waveformsPerFamily, f)
+        x, waveforms, errorIndexes = uniform_gen.gen_uniform_based_waveform_family(waveformsPerFamily, f)
         mplf.save_plots(x, waveforms, genFamiliesOnSinglePlot, errorIndexes, IMAGE_DIRECTORY)
 
 

@@ -5,7 +5,7 @@ import numpy.random as rnd
 from tqdm import tqdm
 
 
-class generator:
+class Generator:
 
     def gen_uniform_based_waveform_family(self, waveformsPerFamily, familyNumber):
         factorOfWaveformsWithError = 0.3
