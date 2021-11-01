@@ -1,4 +1,5 @@
 import mplformat as mplf
+import plotlyformat as ptly
 import uniformwaveform
 
 IMAGE_DIRECTORY = "images"
@@ -18,7 +19,7 @@ def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, singlePlot, pri
 
 
 def main():
-    gen_uniform_based_waveforms(1, 5, singlePlot=False, printer=mplf.Printer())
+    gen_uniform_based_waveforms(2, 5, singlePlot=False, printer=ptly.Printer())
 
 
 if __name__ == "__main__":
