@@ -21,19 +21,19 @@ class Printer:
         return filename
 
 
-    def save_plots(self, x, waveforms, genFamiliesOnSinglePlot, errorIndexes, directory):
+    def save_plot_family(self, x, waveformFamily, singlePlot, errorIndexes, directory):
         os.makedirs(directory, exist_ok=True)
         xTitle = sv.get_random_xaxis()
         yTitle = sv.get_random_yaxis()
         plt.figure(figsize=(7, 5), dpi=200)
-        if genFamiliesOnSinglePlot:
-            for y in waveforms:
-                plt.plot(x, y, color=self.random_color())
+        if singlePlot:
+            for wavecorm in waveformFamily:
+                plt.plot(x, wavecorm, color=self.random_color())
             self.save_plot(xTitle, yTitle)
         else:
-            for n in range(len(waveforms)):
-                ylim = self.get_max_y_axis_plot_scale(x, waveforms)
-                plt.plot(x, waveforms[n], color=self.random_color())
+            for n in range(len(waveformFamily)):
+                ylim = self.get_max_y_axis_plot_scale(x, waveformFamily)
+                plt.plot(x, waveformFamily[n], color=self.random_color())
                 plt.gca().set_ylim(ylim)
                 label = 'good'
                 if n in errorIndexes:
