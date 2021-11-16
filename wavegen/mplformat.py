@@ -8,7 +8,7 @@ import Labels
 import semivariables as sv
 
 class Printer:
-    def save_plot(self, xTitle, yTitle, classification, directory):
+    def save_plot(self, xTitle, yTitle, directory, waveformIndex, errorIndexes):
         title = f'{sv.get_random_discipline()} {yTitle}'
         current_time = datetime.now().strftime("%y%m%d%H%M%S%f")
         filename = f'{directory}/{title}{str(current_time)}.png'
@@ -17,7 +17,7 @@ class Printer:
         plt.ylabel(yTitle)
         plt.savefig(filename)
         plt.cla()
-        Labels.save_labels_to_csv(directory, [filename, classification])
+        Labels.save_labels_to_csv(directory, filename, waveformIndex, errorIndexes)
         return filename
 
 
@@ -29,16 +29,13 @@ class Printer:
         if singlePlot:
             for wavecorm in waveformFamily:
                 plt.plot(x, wavecorm, color=self.random_color())
-            self.save_plot(xTitle, yTitle)
+            self.save_plot(xTitle, yTitle, directory, 0, errorIndexes)
         else:
             for n in range(len(waveformFamily)):
                 ylim = self.get_max_y_axis_plot_scale(x, waveformFamily)
                 plt.plot(x, waveformFamily[n], color=self.random_color())
                 plt.gca().set_ylim(ylim)
-                label = 'good'
-                if n in errorIndexes:
-                    label = 'bad'
-                self.save_plot(xTitle, yTitle, label, directory)
+                self.save_plot(xTitle, yTitle, directory, n, errorIndexes)
 
 
     def get_max_y_axis_plot_scale(self, x, waveforms):
