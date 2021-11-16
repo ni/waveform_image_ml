@@ -19,7 +19,11 @@ def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, singlePlot, pri
 
 
 def main():
-    gen_uniform_based_waveforms(2, 5, singlePlot=False, printer=ptly.Printer())
+    formatters = [mplf.Printer(), ptly.Printer()]
+    numberOfFamilies = 2
+    waveformsPerFamily = 5
+    for formatter in formatters:
+        gen_uniform_based_waveforms(numberOfFamilies, waveformsPerFamily, singlePlot=False, printer=formatter)
 
 
 if __name__ == "__main__":
