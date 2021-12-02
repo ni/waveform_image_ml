@@ -3,9 +3,9 @@ import numpy.random as rnd
 disciplines = ['Simulate', 'Validate', 'ATE']
 xAxisLabels = ['Frequency', 'Voltage', 'Time', 'Decibels (dB)', 'Degrees']
 yAxisLabels = [
-    'R_SigmaJA (C/W)',
-    'R_SigmaJCTop (C/W)',
-    'RSigmaJB (C/W)',
+    'R_SigmaJA (CW)',
+    'R_SigmaJCTop (CW)',
+    'RSigmaJB (CW)',
     'V_ESD (V)',
     'TND+N (dB)',
     'IMD (dB)',
