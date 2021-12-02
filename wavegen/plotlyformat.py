@@ -32,9 +32,10 @@ class Printer:
             )
             
             current_time = datetime.now().strftime("%y%m%d%H%M%S%f")
-            filename = f'{directory}/{title}{str(current_time)}.png'
-            fig.write_image(filename)
-            Labels.save_labels_to_csv(directory, filename, n, errorIndexes)
+            filename = f'{title}{str(current_time)}.png'.replace(' ','').replace('\\', '').replace('/','')
+            path = f'{directory}/{filename}'
+            fig.write_image(path)
+            Labels.save_labels_to_csv(directory, path, n, errorIndexes)
             n += 1
 
     def random_color(self):

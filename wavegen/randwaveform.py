@@ -1,5 +1,6 @@
 import mplformat as mplf
 import plotlyformat as ptly
+import parquetsave as pqsv
 import uniformwaveform
 
 IMAGE_DIRECTORY = "images"
@@ -11,6 +12,7 @@ def gen_random_square_wave():
 
 
 def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, singlePlot, printer):
+    print(f'Generating Waveforms with {type(printer)}')
     print(f"Total: {numFamilies * waveformsPerFamily}. Creating {numFamilies} waveform families with {waveformsPerFamily} waveforms per family.")
     uniform_gen = uniformwaveform.Generator()
     for f in range(numFamilies):
@@ -19,9 +21,9 @@ def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, singlePlot, pri
 
 
 def main():
-    formatters = [mplf.Printer(), ptly.Printer()]
-    numberOfFamilies = 2
-    waveformsPerFamily = 5
+    formatters = [pqsv.Printer(), mplf.Printer(), ptly.Printer()]
+    numberOfFamilies = 10
+    waveformsPerFamily = 10
     for formatter in formatters:
         gen_uniform_based_waveforms(numberOfFamilies, waveformsPerFamily, singlePlot=False, printer=formatter)
 
