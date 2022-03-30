@@ -23,7 +23,6 @@ Create a AI/ML approach to classifying images of waveform data
 
 1. Group similar waveforms.
 2. Tag images of waveforms that require further analysis due to anomalies.
-3. Highlight image regions that are possibly errors.
 
 # Getting Started
 After cloning the repo, do the following:
