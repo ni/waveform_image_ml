@@ -1,25 +1,127 @@
 import numpy.random as rnd
 
 disciplines = ['Simulate', 'Validate', 'ATE']
-xAxisLabels = ['Frequency', 'Voltage', 'Time', 'Decibels (dB)', 'Degrees']
+
+name_field = 'Name'
+units_field = 'Units'
+baseUnits_field = 'BaseUnits'
+
+xAxisOptions = [
+    {
+        name_field: 'Frequency',
+        units_field: 'MHz',
+        baseUnits_field: 'Hz'
+    },
+    {
+        name_field: 'Voltage',
+        units_field: 'mV',
+        baseUnits_field: 'V'
+    },
+    {
+        name_field: 'Time',
+        units_field: 'ms',
+        baseUnits_field: 's'
+    },
+    {
+        name_field: 'Decibels',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'Degrees',
+        units_field: 'C',
+        baseUnits_field: 'C'
+    }
+]
+
+yAxisOptions = [
+    {
+        name_field: 'R_SigmaJA',
+        units_field: 'CW',
+        baseUnits_field: 'CW'
+    },
+    {
+        name_field: 'R_SigmaJCTop',
+        units_field: 'CW',
+        baseUnits_field: 'CW'
+    },
+    {
+        name_field: 'RSigmaJB',
+        units_field: 'CW',
+        baseUnits_field: 'CW'
+    },
+    {
+        name_field: 'V_ESD',
+        units_field: 'V',
+        baseUnits_field: 'V'
+    },
+    {
+        name_field: 'TND+N',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'IMD',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'GBW',
+        units_field: 'MHz',
+        baseUnits_field: 'Hz'
+    },
+    {
+        name_field: 'SR',
+        units_field: 'V/us',
+        baseUnits_field: 'V/us'
+    },
+    {
+        name_field: 'Overload Recovery',
+        units_field: 'ns',
+        baseUnits_field: 's'
+    },
+    {
+        name_field: 'Channel Separation',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'e_n',
+        units_field: 'nVpp',
+        baseUnits_field: 'Vpp'
+    },
+    {
+        name_field: 'e_n',
+        units_field: 'uVpp',
+        baseUnits_field: 'Vpp'
+    },
+    {
+        name_field: 'I_n',
+        units_field: 'pA/rtHz',
+        baseUnits_field: 'A/rtHz'
+    },
+    {
+        name_field: 'V_OS',
+        units_field: 'mV',
+        baseUnits_field: 'V'
+    },
+    {
+        name_field: 'V_OS',
+        units_field: 'uV/C',
+        baseUnits_field: 'V/C'
+    },
+    {
+        name_field: 'PSRR',
+        units_field: 'uV/V',
+        baseUnits_field: 'V/V'
+    },
+    {
+        name_field: 'I_B',
+        units_field: 'nA',
+        baseUnits_field: 'A'
+    }
+]
 yAxisLabels = [
-    'R_SigmaJA (CW)',
-    'R_SigmaJCTop (CW)',
-    'RSigmaJB (CW)',
-    'V_ESD (V)',
-    'TND+N (dB)',
-    'IMD (dB)',
-    'GBW (MHz)',
-    'SR (V/us)',
-    'Overload Recovery (ns)',
-    'Channel Separation (dB)',
-    'e_n (nVpp)',
-    'e_n (uVpp)',
-    'I_n (pA/rtHz)',
-    'V_OS (mV)',
-    'V_OS (uV/C)',
-    'PSRR (uV/V)',
-    'I_B (nA)',
     'I_OS (nA)',
     'V_CM (V)',
     'CMRR (uV/V)',
@@ -126,14 +228,32 @@ yAxisLabels = [
 def __get_random_element_from_array(names):
     return names[rnd.randint(0, len(names))]
 
+def get_random_xaxis_title():
+    info = get_random_xaxis_info()
+    return format_axis_title(info)
 
-def get_random_xaxis():
-    return __get_random_element_from_array(xAxisLabels)
+def get_random_xaxis_info():
+    return __get_random_element_from_array(xAxisOptions)
 
+def get_random_yaxis_title():
+    info = get_random_yaxis_info()
+    return format_axis_title(info)
 
-def get_random_yaxis():
-    return __get_random_element_from_array(yAxisLabels)
+def get_random_yaxis_info():
+    return __get_random_element_from_array(yAxisOptions)
 
+def get_random_unique_yaxis_info(numRequested: int):
+    infos = []
+    while len(infos) < numRequested:
+        yaxis = __get_random_element_from_array(yAxisOptions)
+        if yaxis in infos:
+            continue
+        else:
+            infos.append(yaxis)
+    return list(infos)
 
 def get_random_discipline():
     return __get_random_element_from_array(disciplines)
+
+def format_axis_title(axis_info):
+    return axis_info[name_field] + ' (' + axis_info[units_field] + ')'

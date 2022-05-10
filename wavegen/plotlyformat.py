@@ -11,8 +11,8 @@ import Labels
 class Printer:
     def save_plot_family(self, x, waveformFamily, singlePlot, errorIndexes, directory):
         os.makedirs(directory, exist_ok=True)
-        xTitle = sv.get_random_xaxis()
-        yTitle = sv.get_random_yaxis()
+        xTitle = sv.get_random_xaxis_title()
+        yTitle = sv.get_random_yaxis_title()
         title = f'{sv.get_random_discipline()} {yTitle}'
         n = 0
         for waveform in waveformFamily:
@@ -32,9 +32,10 @@ class Printer:
             )
             
             current_time = datetime.now().strftime("%y%m%d%H%M%S%f")
-            filename = f'{directory}/{title}{str(current_time)}.png'
-            fig.write_image(filename)
-            Labels.save_labels_to_csv(directory, filename, n, errorIndexes)
+            filename = f'{title}{str(current_time)}.png'.replace(' ','').replace('\\', '').replace('/','')
+            path = f'{directory}/{filename}'
+            fig.write_image(path)
+            Labels.save_labels_to_csv(directory, path, n, errorIndexes)
             n += 1
 
     def random_color(self):
