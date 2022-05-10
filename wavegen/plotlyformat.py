@@ -11,7 +11,7 @@ import Labels
 class Printer:
     def save_plot_family(self, x, waveformFamily, singlePlot, errorIndexes, directory):
         os.makedirs(directory, exist_ok=True)
-        xTitle = sv.get_random_xaxis()
+        xTitle = sv.get_random_xaxis_title()
         yTitle = sv.get_random_yaxis()
         title = f'{sv.get_random_discipline()} {yTitle}'
         n = 0

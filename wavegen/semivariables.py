@@ -1,7 +1,34 @@
 import numpy.random as rnd
 
 disciplines = ['Simulate', 'Validate', 'ATE']
-xAxisLabels = ['Frequency', 'Voltage', 'Time', 'Decibels (dB)', 'Degrees']
+xAxisOptions = [
+    {
+        'Name': 'Frequency',
+        'Units': 'MHz',
+        'BaseUnit': 'Hz'
+    },
+    {
+        'Name': 'Voltage',
+        'Units': 'mV',
+        'BaseUnit': 'V'
+    },
+    {
+        'Name': 'Time',
+        'Units': 'ms',
+        'BaseUnit': 's'
+    },
+    {
+        'Name': 'Decibels',
+        'Units': 'dB',
+        'BaseUnit': 'dB'
+    },
+    {
+        'Name': 'Degrees',
+        'Units': 'C',
+        'BaseUnit': 'C'
+    }
+]
+
 yAxisLabels = [
     'R_SigmaJA (CW)',
     'R_SigmaJCTop (CW)',
@@ -127,9 +154,12 @@ def __get_random_element_from_array(names):
     return names[rnd.randint(0, len(names))]
 
 
-def get_random_xaxis():
-    return __get_random_element_from_array(xAxisLabels)
+def get_random_xaxis_title():
+    info = get_random_xaxis_info()
+    return info['Name'] + ' (' + info['Units'] + ')'
 
+def get_random_xaxis_info():
+    return __get_random_element_from_array(xAxisOptions)
 
 def get_random_yaxis():
     return __get_random_element_from_array(yAxisLabels)

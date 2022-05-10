@@ -26,11 +26,11 @@ class Printer:
             self.save_datafame_to_waveform_parquet(df, title, directory)
 
     def save_all_channels_to_one_file(self, waveformFamily, x, directory):
-        title, xTitle, yTitle = self.get_titles()
+        title, xInfo, yTitle = self.get_titles()
         frames = []
         for waveform in waveformFamily:
             _, _, yTitle = self.get_titles()
-            frames.append(self.make_channel_dataframe(x, waveform, title, xTitle, yTitle))
+            frames.append(self.make_channel_dataframe(x, waveform, title, xInfo, yTitle))
         self.save_datafame_to_waveform_parquet(pd.concat(frames).reset_index(drop=True), title, directory)
 
     def save_datafame_to_waveform_parquet(self, dataframe, title, directory):
@@ -42,14 +42,14 @@ class Printer:
         pq.write_table(arrowWaveform,filename)
         os.replace(filename, f'{directory}/{filename}')
 
-    def make_channel_dataframe(self, x, y, waveformName, xChannelName, yChannelName) -> pd.DataFrame:
+    def make_channel_dataframe(self, x, y, waveformName, xChannelInfo, yChannelName) -> pd.DataFrame:
         df = pd.DataFrame(
             {
                 'WaveformName': [waveformName] * len(x),
                 'x': x, 
-                'xChannelName' : [xChannelName] * len(x),
-                'xUnit': ['mV'] * len(x),
-                'xBaseUnit': ['V'] * len(x),
+                'xChannelName' : [xChannelInfo['Name']] * len(x),
+                'xUnit': [xChannelInfo['Units']] * len(x),
+                'xBaseUnit': [xChannelInfo['BaseUnit']] * len(x),
                 'xScale' : ['Linear'] * len(x),
                 'y': y,
                 'yChannelName' : [yChannelName] * len(x),
@@ -82,7 +82,7 @@ class Printer:
         return f'{title}{str(datetime.now().strftime("%y%m%d%H%M%S%f"))}.parquet'.replace(' ','').replace('\\', '').replace('/','')
 
     def get_titles(self):
-        xTitle = sv.get_random_xaxis()
+        xInfo = sv.get_random_xaxis_info()
         yTitle = sv.get_random_yaxis()
         title = f'{sv.get_random_discipline()} {yTitle}'
-        return title, xTitle, yTitle
+        return title, xInfo, yTitle
