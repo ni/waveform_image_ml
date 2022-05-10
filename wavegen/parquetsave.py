@@ -19,16 +19,18 @@ class Printer:
             self.save_one_file_per_channel(waveformFamily, x, directory)
 
     def save_one_file_per_channel(self, waveformFamily, x, directory):
-        title, xTitle, yTitle = self.get_titles()
+        title, xTitle, yTitle = self.get_titles(len(waveformFamily))
         for waveform in waveformFamily:
             df = self.make_channel_dataframe(x, waveform, title, xTitle, yTitle)
             self.save_datafame_to_waveform_parquet(df, title, directory)
 
     def save_all_channels_to_one_file(self, waveformFamily, x, directory):
-        title, xInfo, yTitle = self.get_titles()
+        title, xInfo, yTitles = self.get_titles(len(waveformFamily))
         frames = []
+        i = 0
         for waveform in waveformFamily:
-            _, _, yTitle = self.get_titles()
+            yTitle = yTitles[i]
+            i = i + 1
             frames.append(self.make_channel_dataframe(x, waveform, title, xInfo, yTitle))
         self.save_datafame_to_waveform_parquet(pd.concat(frames).reset_index(drop=True), title, directory)
 
@@ -80,8 +82,8 @@ class Printer:
     def get_filename(self, title):
         return f'{title}{str(datetime.now().strftime("%y%m%d%H%M%S%f"))}.parquet'.replace(' ','').replace('\\', '').replace('/','')
 
-    def get_titles(self):
+    def get_titles(self, numChannels):
         xInfo = sv.get_random_xaxis_info()
-        yTitle = sv.get_random_yaxis_info()
-        title = f'{sv.get_random_discipline()} {yTitle[sv.name_field]}'
-        return title, xInfo, yTitle
+        yTitles = sv.get_random_unique_yaxis_info(numChannels)
+        title = f'{sv.get_random_discipline()} {yTitles[0][sv.name_field]}'
+        return title, xInfo, yTitles

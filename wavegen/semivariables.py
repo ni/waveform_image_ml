@@ -242,6 +242,16 @@ def get_random_yaxis_title():
 def get_random_yaxis_info():
     return __get_random_element_from_array(yAxisOptions)
 
+def get_random_unique_yaxis_info(numRequested: int):
+    infos = []
+    while len(infos) < numRequested:
+        yaxis = __get_random_element_from_array(yAxisOptions)
+        if yaxis in infos:
+            continue
+        else:
+            infos.append(yaxis)
+    return list(infos)
+
 def get_random_discipline():
     return __get_random_element_from_array(disciplines)
 
