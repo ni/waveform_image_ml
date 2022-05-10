@@ -7,7 +7,7 @@ IMAGE_DIRECTORY = "images"
 
 
 def gen_random_square_wave():
-    # make this have random heights (gausian in some range)
+    # make this have random heights (Gaussian in some range)
     return 1
 
 
