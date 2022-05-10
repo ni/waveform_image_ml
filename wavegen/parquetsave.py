@@ -1,7 +1,6 @@
-from email.mime import base
 import os
 from datetime import datetime
-import wave
+from email.mime import base
 
 import pandas as pd
 import pyarrow as pa
@@ -39,22 +38,22 @@ class Printer:
         arrowWaveform = pa.Table.from_pandas(dataframe)
         arrowWaveform = arrowWaveform.cast(self.get_parquet_schema())
         filename = self.get_filename(title)
-        pq.write_table(arrowWaveform,filename)
+        pq.write_table(arrowWaveform, filename)
         os.replace(filename, f'{directory}/{filename}')
 
-    def make_channel_dataframe(self, x, y, waveformName, xChannelInfo, yChannelName) -> pd.DataFrame:
+    def make_channel_dataframe(self, x, y, waveformName, xChannelInfo, yChannelInfo) -> pd.DataFrame:
         df = pd.DataFrame(
             {
                 'WaveformName': [waveformName] * len(x),
                 'x': x, 
-                'xChannelName' : [xChannelInfo['Name']] * len(x),
-                'xUnit': [xChannelInfo['Units']] * len(x),
-                'xBaseUnit': [xChannelInfo['BaseUnit']] * len(x),
+                'xChannelName' : [xChannelInfo[sv.name_field]] * len(x),
+                'xUnit': [xChannelInfo[sv.units_field]] * len(x),
+                'xBaseUnit': [xChannelInfo[sv.baseUnits_field]] * len(x),
                 'xScale' : ['Linear'] * len(x),
                 'y': y,
-                'yChannelName' : [yChannelName] * len(x),
-                'yUnit': ['mV'] * len(x),
-                'yBaseUnit': ['V'] * len(x),
+                'yChannelName' : [yChannelInfo[sv.name_field]] * len(x),
+                'yUnit': [yChannelInfo[sv.units_field]] * len(x),
+                'yBaseUnit': [yChannelInfo[sv.baseUnits_field]] * len(x),
                 'yScale' : ['Linear'] * len(x),
             }
         )
@@ -83,6 +82,6 @@ class Printer:
 
     def get_titles(self):
         xInfo = sv.get_random_xaxis_info()
-        yTitle = sv.get_random_yaxis()
-        title = f'{sv.get_random_discipline()} {yTitle}'
+        yTitle = sv.get_random_yaxis_info()
+        title = f'{sv.get_random_discipline()} {yTitle[sv.name_field]}'
         return title, xInfo, yTitle

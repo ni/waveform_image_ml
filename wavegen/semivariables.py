@@ -1,40 +1,66 @@
 import numpy.random as rnd
 
 disciplines = ['Simulate', 'Validate', 'ATE']
+
+name_field = 'Name'
+units_field = 'Units'
+baseUnits_field = 'BaseUnits'
+
 xAxisOptions = [
     {
-        'Name': 'Frequency',
-        'Units': 'MHz',
-        'BaseUnit': 'Hz'
+        name_field: 'Frequency',
+        units_field: 'MHz',
+        baseUnits_field: 'Hz'
     },
     {
-        'Name': 'Voltage',
-        'Units': 'mV',
-        'BaseUnit': 'V'
+        name_field: 'Voltage',
+        units_field: 'mV',
+        baseUnits_field: 'V'
     },
     {
-        'Name': 'Time',
-        'Units': 'ms',
-        'BaseUnit': 's'
+        name_field: 'Time',
+        units_field: 'ms',
+        baseUnits_field: 's'
     },
     {
-        'Name': 'Decibels',
-        'Units': 'dB',
-        'BaseUnit': 'dB'
+        name_field: 'Decibels',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
     },
     {
-        'Name': 'Degrees',
-        'Units': 'C',
-        'BaseUnit': 'C'
+        name_field: 'Degrees',
+        units_field: 'C',
+        baseUnits_field: 'C'
     }
 ]
-
+yAxisOptions = [
+    {
+        name_field: 'R_SigmaJA',
+        units_field: 'CW',
+        baseUnits_field: 'CW'
+    },
+    {
+        name_field: 'R_SigmaJCTop',
+        units_field: 'CW',
+        baseUnits_field: 'CW'
+    },
+    {
+        name_field: 'RSigmaJB',
+        units_field: 'CW',
+        baseUnits_field: 'CW'
+    },
+    {
+        name_field: 'V_ESD',
+        units_field: 'V',
+        baseUnits_field: 'V'
+    },
+    {
+        name_field: 'TND+N',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    }
+]
 yAxisLabels = [
-    'R_SigmaJA (CW)',
-    'R_SigmaJCTop (CW)',
-    'RSigmaJB (CW)',
-    'V_ESD (V)',
-    'TND+N (dB)',
     'IMD (dB)',
     'GBW (MHz)',
     'SR (V/us)',
@@ -153,17 +179,22 @@ yAxisLabels = [
 def __get_random_element_from_array(names):
     return names[rnd.randint(0, len(names))]
 
-
 def get_random_xaxis_title():
     info = get_random_xaxis_info()
-    return info['Name'] + ' (' + info['Units'] + ')'
+    return format_axis_title(info)
 
 def get_random_xaxis_info():
     return __get_random_element_from_array(xAxisOptions)
 
-def get_random_yaxis():
-    return __get_random_element_from_array(yAxisLabels)
+def get_random_yaxis_title():
+    info = get_random_yaxis_info()
+    return format_axis_title(info)
 
+def get_random_yaxis_info():
+    return __get_random_element_from_array(yAxisOptions)
 
 def get_random_discipline():
     return __get_random_element_from_array(disciplines)
+
+def format_axis_title(axis_info):
+    return axis_info[name_field] + ' (' + axis_info[units_field] + ')'

@@ -22,10 +22,10 @@ def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, singlePlot, pri
 
 def main():
     formatters = [pqsv.Printer(), mplf.Printer(), ptly.Printer()]
-    numberOfFamilies = 10
-    waveformsPerFamily = 10
+    numberOfFamilies = 3
+    waveformsPerFamily = 3
     for formatter in formatters:
-        gen_uniform_based_waveforms(numberOfFamilies, waveformsPerFamily, singlePlot=False, printer=formatter)
+        gen_uniform_based_waveforms(numberOfFamilies, waveformsPerFamily, singlePlot=True, printer=formatter)
 
 
 if __name__ == "__main__":

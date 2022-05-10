@@ -25,7 +25,7 @@ class Printer:
     def save_plot_family(self, x, waveformFamily, singlePlot, errorIndexes, directory):
         os.makedirs(directory, exist_ok=True)
         xTitle = sv.get_random_xaxis_title()
-        yTitle = sv.get_random_yaxis()
+        yTitle = sv.get_random_yaxis_title()
         plt.figure(figsize=(7, 5), dpi=200)
         if singlePlot:
             for wavecorm in waveformFamily:
