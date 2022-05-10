@@ -33,6 +33,7 @@ xAxisOptions = [
         baseUnits_field: 'C'
     }
 ]
+
 yAxisOptions = [
     {
         name_field: 'R_SigmaJA',
@@ -58,21 +59,69 @@ yAxisOptions = [
         name_field: 'TND+N',
         units_field: 'dB',
         baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'IMD',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'GBW',
+        units_field: 'MHz',
+        baseUnits_field: 'Hz'
+    },
+    {
+        name_field: 'SR',
+        units_field: 'V/us',
+        baseUnits_field: 'V/us'
+    },
+    {
+        name_field: 'Overload Recovery',
+        units_field: 'ns',
+        baseUnits_field: 's'
+    },
+    {
+        name_field: 'Channel Separation',
+        units_field: 'dB',
+        baseUnits_field: 'dB'
+    },
+    {
+        name_field: 'e_n',
+        units_field: 'nVpp',
+        baseUnits_field: 'Vpp'
+    },
+    {
+        name_field: 'e_n',
+        units_field: 'uVpp',
+        baseUnits_field: 'Vpp'
+    },
+    {
+        name_field: 'I_n',
+        units_field: 'pA/rtHz',
+        baseUnits_field: 'A/rtHz'
+    },
+    {
+        name_field: 'V_OS',
+        units_field: 'mV',
+        baseUnits_field: 'V'
+    },
+    {
+        name_field: 'V_OS',
+        units_field: 'uV/C',
+        baseUnits_field: 'V/C'
+    },
+    {
+        name_field: 'PSRR',
+        units_field: 'uV/V',
+        baseUnits_field: 'V/V'
+    },
+    {
+        name_field: 'I_B',
+        units_field: 'nA',
+        baseUnits_field: 'A'
     }
 ]
 yAxisLabels = [
-    'IMD (dB)',
-    'GBW (MHz)',
-    'SR (V/us)',
-    'Overload Recovery (ns)',
-    'Channel Separation (dB)',
-    'e_n (nVpp)',
-    'e_n (uVpp)',
-    'I_n (pA/rtHz)',
-    'V_OS (mV)',
-    'V_OS (uV/C)',
-    'PSRR (uV/V)',
-    'I_B (nA)',
     'I_OS (nA)',
     'V_CM (V)',
     'CMRR (uV/V)',
