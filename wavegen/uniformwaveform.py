@@ -15,7 +15,7 @@ class Generator:
         segments = rnd.randint(4, 8)
         xBounds = rnd.rand(2)
         xMin, xMax = np.min(xBounds), np.max(xBounds)
-        xPointCount = 10000
+        xPointCount = 1000
         x = np.linspace(xMin, xMax, num=xPointCount)
         y = self.__gen_random_uniform_based_waveform(x, segments)
         waveforms = []
