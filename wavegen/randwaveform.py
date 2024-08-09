@@ -27,7 +27,7 @@ def gen_uniform_based_waveforms(numFamilies, waveformsPerFamily, singlePlot, pri
 
 
 def main():
-    formatters = [pqsv.Printer(), mplf.Printer()]
+    formatters = [pqsv.Printer(), mplf.Printer(), ptly.Printer()]
     numberOfFamilies = 3
     waveformsPerFamily = 3
     for formatter in formatters:
