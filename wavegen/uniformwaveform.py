@@ -3,11 +3,29 @@ import math
 import numpy as np
 import numpy.random as rnd
 from tqdm import tqdm
+from typing import Tuple, List
 
 
 class Generator:
 
-    def gen_uniform_based_waveform_family(self, waveformsPerFamily, familyNumber):
+    def gen_uniform_based_waveform_family(
+        self, waveformsPerFamily, familyNumber
+    ) -> Tuple[np.ndarray, List[np.ndarray], np.ndarray]:
+        """Generates several waveforms that have the same general shape.
+
+        This method generates multiple waveforms with the same general shape and introduces errors
+        into some of them. It also introduces noise into each of the waveforms.
+
+        Args:
+            `waveformsPerFamily`: The number of waveforms to generate for this family/shape.
+            `familyNumber`: The id for this family.
+
+        Returns:
+            `Tuple[numpy.ndarray, List[numpy.ndarray], numpy.ndarray]`
+                - `x`: the x axis series for the waveform
+                - `waveforms`: a list of the y traces for the waveform
+                - `errorIndexes`: a list of the indices of waveforms that had errors introduced.
+        """
         factorOfWaveformsWithError = 0.3
         numberWithErrors = math.floor(
             waveformsPerFamily * factorOfWaveformsWithError * rnd.random()
